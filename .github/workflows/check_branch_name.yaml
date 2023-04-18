@@ -1,0 +1,17 @@
+name: Enforce branch name
+
+on:
+  create:
+
+jobs:
+  enforce-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch name
+        run: |
+          if [[ "$GITHUB_REF" =~ ^refs/heads/(feature|bugfix|hotfix|release)/.*$ ]]; then
+            exit 0
+          else
+            echo "Branch name must start with 'feature/', 'bugfix/', 'hotfix/',  or 'release/'"
+            exit 1
+          fi
